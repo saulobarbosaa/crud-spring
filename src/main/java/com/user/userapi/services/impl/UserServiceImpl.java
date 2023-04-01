@@ -2,6 +2,7 @@ package com.user.userapi.services.impl;
 
 import java.util.Optional;
 
+import com.user.userapi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,6 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserModel findById(Integer id) {
 		Optional<UserModel> obj = repository.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado na base de dados"));
 	}
 }

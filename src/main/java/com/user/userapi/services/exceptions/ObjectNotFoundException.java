@@ -1,2 +1,8 @@
-package com.user.userapi.services.exceptions;public class ObjectNotFoundException {
+package com.user.userapi.services.exceptions;
+
+public class ObjectNotFoundException extends RuntimeException{
+
+    public ObjectNotFoundException(String message) {
+        super(message);
+    }
 }
