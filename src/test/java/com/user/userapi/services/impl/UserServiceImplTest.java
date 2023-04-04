@@ -14,6 +14,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,8 +32,8 @@ class UserServiceImplTest {
     private UserRepository repository;
     @Mock
     private ModelMapper mapper;
-    UserDTO userDto;
-    private UserModel user;
+    private UserDTO userDto;
+    private UserModel userModel;
     private Optional<UserModel> optUser;
 
     @BeforeEach
@@ -68,7 +70,15 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findAll() {
+    void whenFindAllThenReturnAnList() {
+
+        List<UserModel> listUserModel = new ArrayList<UserModel>();
+        listUserModel.add(userModel);
+
+        Mockito.when(repository.findAll()).thenReturn(listUserModel);
+
+        List<UserModel> listResponse = service.findAll();
+        Assertions.assertNotNull(listResponse);
     }
 
     @Test
@@ -84,7 +94,7 @@ class UserServiceImplTest {
     }
 
     private void startUser() {
-        user = new UserModel(ID, NAME, EMAIL, PASSWORD);
+        userModel = new UserModel(ID, NAME, EMAIL, PASSWORD);
         userDto = new UserDTO(ID, NAME, EMAIL, PASSWORD);
         optUser = Optional.of(new UserModel(ID, NAME, EMAIL, PASSWORD));
     }
