@@ -3,6 +3,7 @@ package com.user.userapi.services.impl;
 import com.user.userapi.dto.UserDTO;
 import com.user.userapi.models.UserModel;
 import com.user.userapi.repositories.UserRepository;
+import com.user.userapi.services.exceptions.ObjectNotFoundException;
 import org.apache.catalina.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,6 +53,18 @@ class UserServiceImplTest {
         Assertions.assertEquals(NAME, response.getName());
         Assertions.assertEquals(EMAIL, response.getEmail());
         Assertions.assertEquals(PASSWORD, response.getPassword());
+    }
+
+    @Test
+    void whenFindByIdThenReturnAnObjectNotFoundException() {
+        Mockito.when(repository.findById(Mockito.anyInt())).thenThrow(new ObjectNotFoundException("Objeto nao encontrado"));
+
+        try{
+            service.findById(ID);
+        } catch (Exception e) {
+            assertEquals(ObjectNotFoundException.class, e.getClass());
+        }
+
     }
 
     @Test
