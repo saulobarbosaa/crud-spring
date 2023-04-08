@@ -3,6 +3,7 @@ package com.user.userapi.services.impl;
 import com.user.userapi.dto.UserDTO;
 import com.user.userapi.models.UserModel;
 import com.user.userapi.repositories.UserRepository;
+import com.user.userapi.services.exceptions.DataIntegratyViolationException;
 import com.user.userapi.services.exceptions.ObjectNotFoundException;
 import org.apache.catalina.User;
 import org.assertj.core.api.AssertionInfo;
@@ -104,6 +105,18 @@ class UserServiceImplTest {
         Assertions.assertEquals(EMAIL, response.getEmail());
         Assertions.assertEquals(PASSWORD, response.getPassword());
 
+    }
+
+    @Test
+    void whenCreateThenReturnAnDataIntegrityViolationException() {
+        Mockito.when(repository.findByEmail(Mockito.anyString())).thenReturn(optUser);
+
+        try {
+            optUser.get().setId(2);
+            service.create(userDto);
+        } catch(Exception e) {
+            assertEquals(DataIntegratyViolationException.class, e.getClass());
+        }
     }
 
     @Test
