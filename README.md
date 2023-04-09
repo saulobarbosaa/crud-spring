@@ -21,7 +21,8 @@ Para a chamada dos endpoints e teste de funcionalidade da API, foi utilizado o P
 
 Próximos passos no projeto:
 
-* Criação de testes utilizando Junit e Mockito; ❌
+* Criação de testes utilizando Junit e Mockito; ✔️
+  - Implementação de testes unitários para classe de ServiceImpl;
 
 * Futuras manutenções para melhoramento de desempenho e otimização do código. ❌
 
